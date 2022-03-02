@@ -27,7 +27,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/assets/css/bootstrap.min.css",
+              "src/assets/css/styles.css"
             ],
             "scripts": []
           },
@@ -93,9 +94,7 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "styles": [
-              "src/styles.css"
-            ],
+            "styles": [],
             "scripts": []
           }
         }
