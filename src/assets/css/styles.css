@@ -1,0 +1,11 @@
+@font-face {
+    font-family: "Oxygen";
+    src: local("Oxygen"), url(../fonts/Oxygen-Regular.ttf) format("truetype");
+}
+
+body{
+    font-family: "Oxygen",Arial, Helvetica, sans-serif;
+    background: url('../images/bgLogin.jpg');
+    background-size: cover;
+    height: 100vh;
+}

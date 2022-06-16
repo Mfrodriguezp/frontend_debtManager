@@ -6,7 +6,7 @@ import { ErrorPageComponent } from './components/error-page/error-page.component
 
 const routes: Routes = [
   {
-    path:'',
+    path:'login',
     component:HomeComponent
   },
   {
