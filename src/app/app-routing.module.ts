@@ -6,16 +6,17 @@ import { ErrorPageComponent } from './components/error-page/error-page.component
 
 const routes: Routes = [
   {
-    path:'login',
-    component:HomeComponent
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
   },
   {
-    path:'managerDebts',
-    component:ManagerDebtsComponent
+    path: 'login',
+    component: HomeComponent
   },
   {
-    path:'**',
-    component:ErrorPageComponent
+    path: 'managerDebts',
+    component: ManagerDebtsComponent
   }
 ];
 
