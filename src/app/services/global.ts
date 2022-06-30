@@ -1,3 +1,5 @@
+import { environment } from "src/environments/environment";
+
 export const global = {
-    url: "http://localhost:300/api/"
+    url: environment.API_URL
 };
