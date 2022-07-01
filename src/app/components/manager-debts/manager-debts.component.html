@@ -1,2 +1,28 @@
-<h2 class="display-5 text-center">This is Star Page</h2>
-<a class="btn btn-danger" href="">Logout</a>
+<h2 class="display-5 text-center">{{this.title}}</h2>
+<div class="container">
+    <table class="table table-bordered text-center">
+        <thead>
+            <tr class="table-light">
+                <th scope="col">Cliente</th>
+                <th scope="col">Valor deuda</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Fecha deuda</th>
+                <th scope="col">Últmo pago</th>
+                <th colspan="2">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let debts of debtsList">
+                <td>{{debts.customerName}}</td>
+                <td>{{debts.debtValue}}</td>
+                <td>{{debts.debtState}}</td>
+                <td>{{debts.dateDebt | date: 'dd/LLL/yyyy'}}</td>
+                <td>{{debts.paymentDate |date: 'dd/LLL/yyyy' | ValidationDate: "Sin Registro"}}</td>
+                <td><a href="#"><fa-icon [icon]="faPencilSquare"></fa-icon></a></td>
+                <td><a href="#"><fa-icon [icon]="faTrashCan"></fa-icon></a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<button class="btn btn-danger" type="button" (click)="logout()">Cerrar Sesión</button>
