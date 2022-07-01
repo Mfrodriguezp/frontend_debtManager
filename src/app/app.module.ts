@@ -7,6 +7,8 @@ import { ManagerDebtsComponent } from './components/manager-debts/manager-debts.
 import { ErrorPageComponent } from './components/error-page/error-page.component';
 import { HttpClientModule} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { ValidationDate } from './pipes/dateValidation.pipe';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -14,13 +16,15 @@ import { FormsModule } from '@angular/forms';
     AppComponent,
     HomeComponent,
     ManagerDebtsComponent,
-    ErrorPageComponent
+    ErrorPageComponent,
+    ValidationDate
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
