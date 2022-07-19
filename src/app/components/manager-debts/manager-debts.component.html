@@ -18,11 +18,59 @@
                 <td>{{debts.debtState}}</td>
                 <td>{{debts.dateDebt | date: 'dd/LLL/yyyy'}}</td>
                 <td>{{debts.paymentDate |date: 'dd/LLL/yyyy' | ValidationDate: "Sin Registro"}}</td>
-                <td><a href="#"><fa-icon [icon]="faPencilSquare"></fa-icon></a></td>
-                <td><a href="#"><fa-icon [icon]="faTrashCan"></fa-icon></a></td>
+                <td><a (click)="getDebt(debts.iddebts)" class="btnActions" data-bs-toggle="modal"
+                        data-bs-target="#editDebt">
+                        <fa-icon [icon]="faPencilSquare"></fa-icon>
+                    </a></td>
+                <td><a class="btnActions">
+                        <fa-icon [icon]="faTrashCan"></fa-icon>
+                    </a></td>
             </tr>
         </tbody>
     </table>
+</div>
+
+<!-- Modals editDebt -->
+
+<div class="modal" id="editDebt" tabindex="-1" aria-labelledby="editDebtlLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar Deuda</h5>
+            </div>
+            <div class="modal-body">
+                <form #formEditDebt="ngForm" (ngSubmit)="editDebt(debt.iddebts,formEditDebt)" *ngIf="debt">
+                    <div class="form-group">
+                        <label for="customerName" class="form-label mt-4">Cliente</label>
+                        <input type="text" class="form-control" id="customerName" #customerName="ngModel" [(ngModel)]="debt.customerName" name="customerName" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="debtValue" class="form-label mt-4">Deuda Actual</label>
+                        <input type="number" class="form-control" id="debtValue" #debtValue="ngModel" [(ngModel)]="debt.debtValue" name="debtValue" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="payment" class="form-label mt-4">Abono</label>
+                        <input type="number" class="form-control" id="payment" name="payment" (blur)="catchEvent($event)">
+                    </div>
+                    <div class="form-group">
+                        <label for="debtPayment" class="form-label mt-4">Nuevo saldo</label>
+                        <input type="number" class="form-control" id="debtPayment" name="debtPayment" [(ngModel)]="debtPayment" disabled>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="debState" class="form-label mt-4">Estado de deuda</label>
+                        <select class="form-select" id="debState" name="debState" [(ngModel)]="debt.debtState">
+                            <option *ngIf="debtPayment > 0">Debe</option>
+                            <option *ngIf="debtPayment <= 0">Pago Total</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Modificar</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <button class="btn btn-danger" type="button" (click)="logout()">Cerrar Sesión</button>

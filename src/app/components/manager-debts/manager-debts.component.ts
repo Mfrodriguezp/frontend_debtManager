@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Router, ActivatedRoute} from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { DebtServiceService } from 'src/app/services/debt-service.service';
 import { GetDebts } from 'src/app/models/debts.interface';
@@ -16,16 +16,20 @@ export class ManagerDebtsComponent implements OnInit {
   public token: any;
   public title: String;
   public debtsList: GetDebts[];
+  public debt!:GetDebts;
   public faPencilSquare = faPencilSquare;
   public faTrashCan = faTrashCan;
+  public debtPayment: Number;
 
   constructor(
     private _autService: AuthService,
     private _router: Router,
+    private _route: ActivatedRoute,
     private _debtService: DebtServiceService
   ) {
     this.title = "Adminstración de deudas";
     this.debtsList =[];
+    this.debtPayment = 0;
   }
 
   ngOnInit() {
@@ -53,11 +57,12 @@ export class ManagerDebtsComponent implements OnInit {
       if (results.login == "failed") {
         this._router.navigate(['/login']);
       } else {
-        alert(results.login);
+        console.log(results.login);
       }
     });
   }
 
+  //function for get Debts
   getDebts() {
     this.token = localStorage.getItem('token');
     return this._debtService.getDebts(this.token).subscribe(results => {
@@ -65,6 +70,36 @@ export class ManagerDebtsComponent implements OnInit {
         this.debtsList = results.debts;
       }
     });
+  }
+//Function for get debt with id
+  getDebt(iddebt:any){
+    this.token = localStorage.getItem('token');
+    return this._debtService.getDebt(iddebt,this.token).subscribe(results=>{
+      if(results.debt.length > 0){
+        this.debt = results.debt[0];
+      }
+    });
+  }
+
+  editDebt(iddebt:any,debt:any){
+    const params = {
+      debtPayment: this.debtPayment,
+      debtState:this.debt.debtState,
+      debtId : this.debt.iddebts
+    };
+    this.token = localStorage.getItem('token');
+    return this._debtService.editDebt(params.debtId,params,this.token).subscribe(results=>{
+      console.log(results);
+    });
+  }
+  //Function for catched value payment input
+  catchEvent(event:any){
+    let payment = 0;
+    payment = parseInt(event.target.value);
+    let oldPayment:any = this.debt.debtValue;
+
+    this.debtPayment = oldPayment -payment;
+    return this.debtPayment;
   }
 
 }
