@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DoCheck, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Router, ActivatedRoute} from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
@@ -6,13 +6,15 @@ import { DebtServiceService } from 'src/app/services/debt-service.service';
 import { GetDebts } from 'src/app/models/debts.interface';
 import { faPencilSquare } from '@fortawesome/free-solid-svg-icons';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import Swal from 'sweetalert2';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-manager-debts',
   templateUrl: './manager-debts.component.html',
   styleUrls: ['./manager-debts.component.css']
 })
-export class ManagerDebtsComponent implements OnInit {
+export class ManagerDebtsComponent implements OnInit, OnDestroy{
   public token: any;
   public title: String;
   public debtsList: GetDebts[];
@@ -20,6 +22,8 @@ export class ManagerDebtsComponent implements OnInit {
   public faPencilSquare = faPencilSquare;
   public faTrashCan = faTrashCan;
   public debtPayment: Number;
+  public suscription: Subscription | undefined;
+  public sumDebts: Number;
 
   constructor(
     private _autService: AuthService,
@@ -30,12 +34,24 @@ export class ManagerDebtsComponent implements OnInit {
     this.title = "Adminstración de deudas";
     this.debtsList =[];
     this.debtPayment = 0;
+    this.sumDebts = 0;
   }
 
   ngOnInit() {
     this.isAuth();
     this.getDebts();
+    this.getTotalDebts(); 
+
+    //Refresh realTime debts
+    this.suscription = this._debtService.refresh$.subscribe(()=>{
+      this.getDebts();
+    })
   }
+
+  ngOnDestroy(): void {
+    this.suscription?.unsubscribe();
+  }
+
 
   logout() {
     return this._autService.logout().subscribe(response => {
@@ -81,6 +97,12 @@ export class ManagerDebtsComponent implements OnInit {
     });
   }
 
+  getTotalDebts(){
+    return this._debtService.getTotalDebts().subscribe(results=>{
+      this.sumDebts = results.totalDebts[0].totalDebts;
+    });
+  }
+
   editDebt(iddebt:any,debt:any){
     const params = {
       debtPayment: this.debtPayment,
@@ -89,7 +111,15 @@ export class ManagerDebtsComponent implements OnInit {
     };
     this.token = localStorage.getItem('token');
     return this._debtService.editDebt(params.debtId,params,this.token).subscribe(results=>{
-      console.log(results);
+      if(results.status == 200){
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'La deuda se ha modificado de manera correcta',
+          showConfirmButton: false,
+          timer: 3000
+        });
+      }
     });
   }
   //Function for catched value payment input
@@ -98,7 +128,7 @@ export class ManagerDebtsComponent implements OnInit {
     payment = parseInt(event.target.value);
     let oldPayment:any = this.debt.debtValue;
 
-    this.debtPayment = oldPayment -payment;
+    this.debtPayment = oldPayment - payment;
     return this.debtPayment;
   }
 

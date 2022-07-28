@@ -1,5 +1,49 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Manager Debts</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Clientes
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Gestionar Clientes</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Administración</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Nombre de Usuario
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Cambiar Contraseña</a></li>
+                        <li><button class="dropdown-item" (click)="logout()">Cerrar Sesión</button></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 <h2 class="display-5 text-center">{{this.title}}</h2>
 <div class="container">
+    <div class="dataPanel d-flex justify-content-between">
+        <div class="addDebt m-3">
+            Crear Deuda
+        </div>
+        <div class="totalDebts m-3">
+            Valor Total Deudas: <strong>${{this.sumDebts}}</strong>
+        </div>
+    </div>
     <table class="table table-bordered text-center">
         <thead>
             <tr class="table-light">
@@ -42,19 +86,23 @@
                 <form #formEditDebt="ngForm" (ngSubmit)="editDebt(debt.iddebts,formEditDebt)" *ngIf="debt">
                     <div class="form-group">
                         <label for="customerName" class="form-label mt-4">Cliente</label>
-                        <input type="text" class="form-control" id="customerName" #customerName="ngModel" [(ngModel)]="debt.customerName" name="customerName" disabled>
+                        <input type="text" class="form-control" id="customerName" #customerName="ngModel"
+                            [(ngModel)]="debt.customerName" name="customerName" disabled>
                     </div>
                     <div class="form-group">
                         <label for="debtValue" class="form-label mt-4">Deuda Actual</label>
-                        <input type="number" class="form-control" id="debtValue" #debtValue="ngModel" [(ngModel)]="debt.debtValue" name="debtValue" disabled>
+                        <input type="number" class="form-control" id="debtValue" #debtValue="ngModel"
+                            [(ngModel)]="debt.debtValue" name="debtValue" disabled>
                     </div>
                     <div class="form-group">
                         <label for="payment" class="form-label mt-4">Abono</label>
-                        <input type="number" class="form-control" id="payment" name="payment" (blur)="catchEvent($event)">
+                        <input type="number" class="form-control" id="payment" name="payment"
+                            (blur)="catchEvent($event)">
                     </div>
                     <div class="form-group">
                         <label for="debtPayment" class="form-label mt-4">Nuevo saldo</label>
-                        <input type="number" class="form-control" id="debtPayment" name="debtPayment" [(ngModel)]="debtPayment" disabled>
+                        <input type="number" class="form-control" id="debtPayment" name="debtPayment"
+                            [(ngModel)]="debtPayment" disabled>
                     </div>
                     <div class="form-group mb-3">
                         <label for="debState" class="form-label mt-4">Estado de deuda</label>
@@ -63,7 +111,7 @@
                             <option *ngIf="debtPayment <= 0">Pago Total</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Modificar</button>
+                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Modificar</button>
                 </form>
             </div>
             <div class="modal-footer">
