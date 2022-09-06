@@ -1,5 +1,5 @@
 export interface GetDebts {
-    iddebts: Number,
+    iddebt: Number,
     idcustomers: Number,
     customerName: String,
     debtValue: Number,

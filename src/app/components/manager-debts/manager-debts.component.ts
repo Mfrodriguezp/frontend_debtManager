@@ -40,7 +40,7 @@ export class ManagerDebtsComponent implements OnInit, OnDestroy{
   ngOnInit() {
     this.isAuth();
     this.getDebts();
-    this.getTotalDebts(); 
+    this.getTotalDebts();
 
     //Refresh realTime debts
     this.suscription = this._debtService.refresh$.subscribe(()=>{
@@ -107,7 +107,7 @@ export class ManagerDebtsComponent implements OnInit, OnDestroy{
     const params = {
       debtPayment: this.debtPayment,
       debtState:this.debt.debtState,
-      debtId : this.debt.iddebts
+      debtId : this.debt.iddebt
     };
     this.token = localStorage.getItem('token');
     return this._debtService.editDebt(params.debtId,params,this.token).subscribe(results=>{
