@@ -103,5 +103,8 @@
       }
     }
   },
-  "defaultProject": "ManagerDebtApp"
+  "defaultProject": "ManagerDebtApp",
+  "cli": {
+    "analytics": false
+  }
 }
