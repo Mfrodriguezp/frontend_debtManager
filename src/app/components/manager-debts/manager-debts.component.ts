@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Router, ActivatedRoute} from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { DebtServiceService } from 'src/app/services/debt-service.service';
-import { GetDebts } from 'src/app/models/debts.interface';
+import { GetDebts, GetCustomers, CreateDebtModel} from 'src/app/models/debts.interface';
 import { faPencilSquare } from '@fortawesome/free-solid-svg-icons';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
@@ -19,11 +19,13 @@ export class ManagerDebtsComponent implements OnInit, OnDestroy{
   public title: String;
   public debtsList: GetDebts[];
   public debt!:GetDebts;
+  public createDebt:CreateDebtModel;
   public faPencilSquare = faPencilSquare;
   public faTrashCan = faTrashCan;
   public debtPayment: Number;
   public suscription: Subscription | undefined;
   public sumDebts: Number;
+  public customerList: GetCustomers[];
 
   constructor(
     private _autService: AuthService,
@@ -35,6 +37,8 @@ export class ManagerDebtsComponent implements OnInit, OnDestroy{
     this.debtsList =[];
     this.debtPayment = 0;
     this.sumDebts = 0;
+    this.customerList=[];
+    this.createDebt= new CreateDebtModel("",0);
   }
 
   ngOnInit() {
@@ -103,6 +107,20 @@ export class ManagerDebtsComponent implements OnInit, OnDestroy{
     });
   }
 
+  setDebt(formDebt:any){
+    return this._debtService.setDebt(this.createDebt).subscribe(results=>{
+      if(results.status == 200){
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Se ha creado una nueva deuda',
+          showConfirmButton: false,
+          timer: 3000
+        });
+      }
+    });
+  }
+
   editDebt(iddebt:any,debt:any){
     const params = {
       debtPayment: this.debtPayment,
@@ -121,6 +139,13 @@ export class ManagerDebtsComponent implements OnInit, OnDestroy{
         });
       }
     });
+  }
+
+  getCustomers(){
+    this.token = localStorage.getItem('token');
+    return this._debtService.getCustomers().subscribe(results=>{
+      this.customerList = results.customers;
+    })
   }
   //Function for catched value payment input
   catchEvent(event:any){

@@ -26,8 +26,17 @@ export class DebtServiceService {
   }
 
   getDebt(iddebt:any,token:string):Observable<any>{
-    let header = new HttpHeaders().set('auth',token); 
+    let header = new HttpHeaders().set('auth',token);
     return this._http.get(this.url+"getDebt/"+iddebt,{headers:header});
+  }
+
+  setDebt(dataDebt:any):Observable<any>{
+    return this._http.post(this.url+"setDebt",dataDebt,{observe:'response'})
+    .pipe(
+      tap(()=>{
+        this._refresh$.next();
+      })
+    )
   }
 
   editDebt(iddebt:any,debt:any,token:string):Observable<any>{
@@ -42,6 +51,10 @@ export class DebtServiceService {
 
   getTotalDebts():Observable<any>{
     return this._http.get(this.url+"getTotalDebts");
+  }
+
+  getCustomers():Observable<any>{
+    return this._http.get(`${this.url}getCustomers`);
   }
 
 }

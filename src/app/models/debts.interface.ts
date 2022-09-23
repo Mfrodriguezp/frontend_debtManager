@@ -7,3 +7,16 @@ export interface GetDebts {
     dateDebt: Date,
     paymentDate: Date
 }
+
+export interface GetCustomers {
+  idcustomers: Number,
+  customerName: String,
+  phoneNumer: String
+}
+
+export class CreateDebtModel{
+  constructor(
+    public customerName: String,
+    public debtValue: Number
+  ){}
+}
