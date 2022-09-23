@@ -9,3 +9,13 @@ body{
     background-size: cover;
     height: 100vh;
 }
+
+.btnDeleteDebt{
+  color:red;
+  transition: all 300ms ease;
+}
+
+.btnDeleteDebt:hover{
+  color: #801b1b;
+}
+

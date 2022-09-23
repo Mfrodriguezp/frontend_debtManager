@@ -67,7 +67,7 @@
                         data-bs-target="#editDebt">
                         <fa-icon [icon]="faPencilSquare"></fa-icon>
                     </a></td>
-                <td><a class="btnActions">
+                <td><a (click)="deleteDebt(debts.iddebt)"class="btnActions btnDeleteDebt">
                         <fa-icon [icon]="faTrashCan"></fa-icon>
                     </a></td>
             </tr>
