@@ -1,0 +1,91 @@
+<app-navbar></app-navbar>
+<h2 class="display-5 text-center">{{this.title}}</h2>
+<div class="container">
+    <div class="dataPanel d-flex justify-content-between mb-3">
+        <div class="addDebt">
+          <button class="btn btn-primary" type="button" data-bs-toggle="modal"
+          data-bs-target="#createCustomer">Crear Cliente</button>
+        </div>
+    </div>
+    <table class="table table-bordered text-center">
+        <thead>
+            <tr class="table-light">
+                <th scope="col">Nombre Cliente</th>
+                <th scope="col">Teléfono</th>
+                <th colspan="2">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let customers of customersList">
+                <td>{{customers.customerName}}</td>
+                <td>{{customers.phoneNumber}}</td>
+                <td><a (click)="getCustomer(customers.idcustomers)" class="btnActions" data-bs-toggle="modal"
+                        data-bs-target="#editCustomer">
+                        <fa-icon [icon]="faPencilSquare"></fa-icon>
+                    </a></td>
+                <td><a (click)="deleteCustomer(customers.idcustomers)"class="btnActions btnDeleteDebt">
+                        <fa-icon [icon]="faTrashCan"></fa-icon>
+                    </a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Modals editCustomer -->
+
+<div class="modal" id="editCustomer" tabindex="-1" aria-labelledby="editDebtlLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar Cliente</h5>
+            </div>
+            <div class="modal-body">
+                <form #formEditCustomer="ngForm" (ngSubmit)="editCustomer(customer.idcustomers,formEditCustomer)" *ngIf="customer">
+                    <div class="form-group">
+                        <label for="customerName" class="form-label mt-4">Cliente</label>
+                        <input type="text" class="form-control" id="customerName" #customerName="ngModel"
+                            [(ngModel)]="customer.customerName" name="customerName">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="phoneNumber" class="form-label mt-4">Número telefónico</label>
+                        <input type="number" class="form-control" id="phoneNumber" #phoneNumber="ngModel"
+                            [(ngModel)]="customer.phoneNumber" name="phoneNumber">
+                    </div>
+                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Modificar</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modals Create Client -->
+<!--div class="modal" id="createDebt" tabindex="-1" aria-labelledby="createDebtlLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Editar Deuda</h5>
+          </div>
+          <div class="modal-body">
+              <form #formCreateDebt="ngForm" (ngSubmit)="setDebt(formCreateDebt)">
+                <div class="form-group mb-3">
+                  <label for="customerName" class="form-label mt-4"></label>
+                  <select class="form-select" id="customerName" name="customerName" #customerName="ngModel" [(ngModel)]="createDebt.customerName">
+                      <option *ngFor="let customers of customerList">{{customers.customerName}}</option>
+                  </select>
+              </div>
+                <div class="form-group mb-3">
+                      <label for="value" class="form-label mt-4">Deuda Actual</label>
+                      <input type="number" class="form-control" id="value" name="value" #debtValue="ngModel" [(ngModel)]="createDebt.debtValue">
+                  </div>
+                  <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Crear Deuda</button>
+              </form>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+      </div>
+  </div>
+</div-->
