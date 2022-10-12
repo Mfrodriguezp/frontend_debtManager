@@ -10,6 +10,8 @@ import { FormsModule } from '@angular/forms';
 import { ValidationDate } from './pipes/dateValidation.pipe';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { CustomersManagerComponent } from './components/customers-manager/customers-manager.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 
 @NgModule({
@@ -18,7 +20,9 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     HomeComponent,
     ManagerDebtsComponent,
     ErrorPageComponent,
-    ValidationDate
+    ValidationDate,
+    CustomersManagerComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
