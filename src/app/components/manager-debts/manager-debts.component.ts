@@ -60,15 +60,6 @@ export class ManagerDebtsComponent implements OnInit, OnDestroy {
     this.suscription?.unsubscribe();
   }
 
-  logout() {
-    return this._autService.logout().subscribe((response) => {
-      localStorage.removeItem('token');
-      setTimeout(() => {
-        this._router.navigate(['/login']);
-      }, 3000);
-    });
-  }
-
   isAuth() {
     this.token = localStorage.getItem('token');
     if (this.token == null) {
