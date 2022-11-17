@@ -38,4 +38,14 @@ export class CustomersService {
     )
   }
 
+  deleteCustomer(idCustomer:Number,token:string):Observable <any>{
+    let header = new HttpHeaders().set('auth', token);
+    return this._http.delete(`${this.url}deleteCustomer/${idCustomer}`,{headers:header,observe:'response'})
+    .pipe(
+      tap(()=>{
+        this._refresh$.next();
+      })
+    );
+  }
+
 }

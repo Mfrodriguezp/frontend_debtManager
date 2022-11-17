@@ -72,6 +72,33 @@ export class CustomersManagerComponent implements OnInit, OnDestroy {
 
   }
   deleteCustomer(idCustomer:Number){
-
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: "Una vez eliminado, no se puede recuperar la información",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'No'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.token=localStorage.getItem('token');
+        console.log("test");
+          this._customerService.deleteCustomer(idCustomer,this.token).subscribe(response=>{
+            Swal.fire(
+              'Eliminado!',
+              'El registro ha sido eliminado correctamente',
+              'success'
+            );
+        },error=>{
+          Swal.fire(
+            'Error!',
+            'No es posible eliminar el registro',
+            'error'
+          );
+        });
+      }
+    })
   }
 }
