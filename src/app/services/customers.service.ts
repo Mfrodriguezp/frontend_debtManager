@@ -1,18 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { global } from './global';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomersService {
-  public url: String;
+  public url= global.url;
+  private _refresh$ = new Subject<void>();
 
   constructor(
     private _http: HttpClient
   ) {
-    this.url= global.url;
+
+  }
+
+  get refresh$() {
+    return this._refresh$;
   }
 
   getCustomers(): Observable<any> {
@@ -23,8 +28,14 @@ export class CustomersService {
     return this._http.get(`${this.url}getCustomer/${idCustomer}`);
   }
 
-  editCustomer(idCustomer:Number,formEditCustomer:any){
-
+  editCustomer(idCustomer:Number,params:any,token:string): Observable<any>{
+    let header = new HttpHeaders().set('auth', token);
+    return this._http.put(`${this.url}editCustomer/${idCustomer}`,params, {headers:header,observe:'response'})
+    .pipe(
+      tap(()=>{
+        this._refresh$.next();
+      })
+    )
   }
 
 }
