@@ -40,7 +40,7 @@
                 <h5 class="modal-title">Editar Cliente</h5>
             </div>
             <div class="modal-body">
-                <form #formEditCustomer="ngForm" (ngSubmit)="editCustomer(customer.idcustomers,formEditCustomer)" *ngIf="customer">
+                <form #formEditCustomer="ngForm" (ngSubmit)="editCustomer(customer.idcustomers)" *ngIf="customer">
                     <div class="form-group">
                         <label for="customerName" class="form-label mt-4">Cliente</label>
                         <input type="text" class="form-control" id="customerName" #customerName="ngModel"

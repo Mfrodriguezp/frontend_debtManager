@@ -1,23 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CustomersService } from 'src/app/services/customers.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { CustomersModel } from 'src/app/models/customers.interface';
 import { faPencilSquare } from '@fortawesome/free-solid-svg-icons';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
-
+import { Subscription } from 'rxjs';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-customers-manager',
   templateUrl: './customers-manager.component.html',
   styleUrls: ['./customers-manager.component.css'],
 })
-export class CustomersManagerComponent implements OnInit {
+export class CustomersManagerComponent implements OnInit, OnDestroy {
   public title: String;
   public customersList: CustomersModel[];
   public customer!: CustomersModel;
   public faPencilSquare = faPencilSquare;
   public faTrashCan = faTrashCan;
+  public token: any;
+  public suscription: Subscription | undefined;
 
   constructor(
-    private _customerService: CustomersService
+    private _customerService: CustomersService,
+    private _autService: AuthService
     ) {
     this.title = 'Administracion de clientes';
     this.customersList = [];
@@ -25,6 +30,13 @@ export class CustomersManagerComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCustomers();
+    this.suscription = this._customerService.refresh$.subscribe(() => {
+      this.getCustomers();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.suscription?.unsubscribe();
   }
 
   getCustomers() {
@@ -39,7 +51,24 @@ export class CustomersManagerComponent implements OnInit {
     });
   }
 
-  editCustomer(idcustomer:Number,formEdit:any){
+  editCustomer(idcustomer:any){
+    const params = {
+      customerId: this.customer.idcustomers,
+      customerName: this.customer.customerName,
+      phoneNumber: this.customer.phoneNumber
+    };
+    this.token=localStorage.getItem('token');
+    return this._customerService.editCustomer(idcustomer,params,this.token).subscribe((results)=>{
+      if (results.status == 201) {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'La información se ha actualizado correctamente',
+          showConfirmButton: false,
+          timer: 3000,
+        });
+      }
+    })
 
   }
   deleteCustomer(idCustomer:Number){
