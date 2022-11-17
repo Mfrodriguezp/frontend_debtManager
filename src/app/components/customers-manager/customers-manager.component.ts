@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CustomersService } from 'src/app/services/customers.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { CustomersModel } from 'src/app/models/customers.interface';
+import { CustomersModel, CreateCustomerModel } from 'src/app/models/customers.interface';
 import { faPencilSquare } from '@fortawesome/free-solid-svg-icons';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
@@ -15,6 +15,7 @@ export class CustomersManagerComponent implements OnInit, OnDestroy {
   public title: String;
   public customersList: CustomersModel[];
   public customer!: CustomersModel;
+  public createCustomer: CreateCustomerModel;
   public faPencilSquare = faPencilSquare;
   public faTrashCan = faTrashCan;
   public token: any;
@@ -26,6 +27,7 @@ export class CustomersManagerComponent implements OnInit, OnDestroy {
     ) {
     this.title = 'Administracion de clientes';
     this.customersList = [];
+    this.createCustomer = new CreateCustomerModel("","");
   }
 
   ngOnInit(): void {
@@ -48,6 +50,21 @@ export class CustomersManagerComponent implements OnInit, OnDestroy {
   getCustomer(idCustomer:any){
     return this._customerService.getCustomer(idCustomer).subscribe((results)=>{
       this.customer = results.customer[0];
+    });
+  }
+
+  setCustomer(formDebt: any) {
+    this.token=localStorage.getItem('token');
+    return this._customerService.setCustomer(this.createCustomer,this.token).subscribe((results) => {
+      if (results.status == 201) {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'El cliente se ha creado correctamente',
+          showConfirmButton: false,
+          timer: 3000,
+        });
+      }
     });
   }
 

@@ -3,3 +3,10 @@ export interface CustomersModel{
   customerName: String,
   phoneNumber: String
 }
+
+export class CreateCustomerModel{
+  constructor(
+    public customerName: String,
+    public phoneNumber: String
+  ){}
+}

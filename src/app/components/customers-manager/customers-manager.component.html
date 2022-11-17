@@ -62,25 +62,24 @@
 </div>
 
 <!-- Modals Create Client -->
-<!--div class="modal" id="createDebt" tabindex="-1" aria-labelledby="createDebtlLabel" aria-hidden="true">
+<div class="modal" id="createCustomer" tabindex="-1" aria-labelledby="createCustomerlLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
       <div class="modal-content">
           <div class="modal-header">
               <h5 class="modal-title">Editar Deuda</h5>
           </div>
           <div class="modal-body">
-              <form #formCreateDebt="ngForm" (ngSubmit)="setDebt(formCreateDebt)">
+              <form #formCreateCustomer="ngForm" (ngSubmit)="setCustomer(formCreateCustomer)">
                 <div class="form-group mb-3">
-                  <label for="customerName" class="form-label mt-4"></label>
-                  <select class="form-select" id="customerName" name="customerName" #customerName="ngModel" [(ngModel)]="createDebt.customerName">
-                      <option *ngFor="let customers of customerList">{{customers.customerName}}</option>
-                  </select>
+                  <label for="customerName" class="form-label mt-4">Cliente</label>
+                        <input type="text" class="form-control" id="customerName" #customerName="ngModel"
+                            [(ngModel)]="createCustomer.customerName" name="customerName">
               </div>
                 <div class="form-group mb-3">
-                      <label for="value" class="form-label mt-4">Deuda Actual</label>
-                      <input type="number" class="form-control" id="value" name="value" #debtValue="ngModel" [(ngModel)]="createDebt.debtValue">
+                      <label for="phoneNumber" class="form-label mt-4">Teléfono</label>
+                      <input type="number" class="form-control" id="phoneNumber" name="phoneNumber" #phoneNumber="ngModel" [(ngModel)]="createCustomer.phoneNumber">
                   </div>
-                  <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Crear Deuda</button>
+                  <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Crear Cliente</button>
               </form>
           </div>
           <div class="modal-footer">
@@ -88,4 +87,4 @@
           </div>
       </div>
   </div>
-</div-->
+</div>
