@@ -1,31 +1,24 @@
-<<<<<<< HEAD
-# fronend_debtManager
-=======
-# ManagerDebtApp
+#DebtManager App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.1.
+Debt Manager is a frontend app built for debt management using Angular 13.
 
-## Development server
+-----
+### Features :tw-2611:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+- Frontend created in Angular for debt management.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- It has user login.
 
-## Build
+- Handle CRUD processes through endpoints with http
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- Responsive app.
+----
+###Used technology :tw-1f527:
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
->>>>>>> development
+- Angular 13.2
+- [SweetAlert2 Angular](https://github.com/sweetalert2/ngx-sweetalert2 "SweetAlert2 Angular")
+- Bootstrap 5 ([Template Bootswatch Cyborg](https://bootswatch.com/cyborg/ "Template Bootswatch Cyborg"))
+----
+####License
+MIT
