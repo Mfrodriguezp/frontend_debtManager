@@ -32,7 +32,8 @@ export class DebtServiceService {
     return this._http.get(this.url + 'getDebt/' + iddebt, { headers: header });
   }
 
-  setDebt(dataDebt: any): Observable<any> {
+  setDebt(dataDebt: any,token:string): Observable<any> {
+    let header = new HttpHeaders().set('auth', token);
     return this._http
       .post(this.url + 'setDebt', dataDebt, { observe: 'response' })
       .pipe(
@@ -58,7 +59,12 @@ export class DebtServiceService {
 
   deleteDebt(iddebt: any,token:string): Observable<any> {
     let header = new HttpHeaders().set('auth', token);
-    return this._http.delete(this.url + 'deleteDebt/'+iddebt,{headers:header});
+    return this._http.delete(this.url + 'deleteDebt/'+iddebt,{headers:header})
+    .pipe(
+      tap(() => {
+        this._refresh$.next();
+      })
+    );
   }
 
   getTotalDebts(): Observable<any> {
