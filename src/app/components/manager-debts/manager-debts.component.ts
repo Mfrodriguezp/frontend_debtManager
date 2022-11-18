@@ -151,7 +151,8 @@ export class ManagerDebtsComponent implements OnInit, OnDestroy {
       cancelButtonText: 'No'
     }).then((result) => {
       if (result.isConfirmed) {
-        this._debtService.deleteDebt(iddebt).subscribe(response=>{
+        this.token = localStorage.getItem('token');
+        this._debtService.deleteDebt(iddebt,this.token).subscribe(response=>{
             Swal.fire(
               'Eliminado!',
               'El registro ha sido eliminado correctamente',

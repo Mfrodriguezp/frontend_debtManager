@@ -56,8 +56,9 @@ export class DebtServiceService {
       );
   }
 
-  deleteDebt(iddebt: any): Observable<any> {
-    return this._http.delete(this.url + 'deleteDebt/'+iddebt);
+  deleteDebt(iddebt: any,token:string): Observable<any> {
+    let header = new HttpHeaders().set('auth', token);
+    return this._http.delete(this.url + 'deleteDebt/'+iddebt,{headers:header});
   }
 
   getTotalDebts(): Observable<any> {
