@@ -105,6 +105,7 @@ export class ManagerDebtsComponent implements OnInit, OnDestroy {
 
   setDebt(formDebt: any) {
     return this._debtService.setDebt(this.createDebt).subscribe((results) => {
+      formDebt.reset();
       if (results.status == 200) {
         Swal.fire({
           position: 'center',

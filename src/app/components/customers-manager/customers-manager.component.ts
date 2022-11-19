@@ -53,9 +53,11 @@ export class CustomersManagerComponent implements OnInit, OnDestroy {
     });
   }
 
-  setCustomer(formDebt: any) {
+  setCustomer(formCustomer: any) {
     this.token=localStorage.getItem('token');
     return this._customerService.setCustomer(this.createCustomer,this.token).subscribe((results) => {
+      //Reset Form Create Customer
+      formCustomer.reset();
       if (results.status == 201) {
         Swal.fire({
           position: 'center',
